@@ -1,0 +1,15 @@
+# equipment_site_django_2022
+This Django project to get equipment records tracked
+
+* Notes:
+- Date is [2022-06-28 Tue]
+- Used the conda django22 environment
+  #+begin_src bash
+conda activate django22
+  #+end_src
+- Python version is 3.9
+- Django version is 4.0.5
+- In Emacs and using the vterm shell use the below code to make the pip3 using the conda correct environment
+  #+begin_src bash
+export PATH="/Users/mohammedalbatati/opt/anaconda3/envs/django22/bin:$PATH"
+  #+end_src
