@@ -24,7 +24,7 @@
 				<ul class="navbar-nav">
 					{% if user.is_authenticated %}
 					<li class="nav-item ">
-						<a class="nav-link" href="#">FAR</a>
+						<a class="nav-link" href="{%url 'about' %}">About</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">Jobs</a>
@@ -37,7 +37,7 @@
 					</li>
 					{% else  %}
 					<li class="nav-item">
-						<a class="nav-link" href="#">About us</a>
+						<a class="nav-link" href="{%url 'about' %}">About us</a>
 					</li>
 					{% endif %}
 					<!-- <li class="nav-item"> -->
