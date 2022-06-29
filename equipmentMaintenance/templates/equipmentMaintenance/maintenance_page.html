@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+<h1>Maintenance Page</h1>
+<p>Here will find the Maintenance list </p> 
+<!-- Adding the filter form here --> 
+<div class="row">
+	<div class="col">
+		<div class="card card-body" >
+			<!-- I liked this method below as it shows the table in a better way -->
+			<form  method="GET" >
+				<table>
+					{{ filter.form.as_table}}
+				</table>
+				<button type="submit" class="btn btn-primary" >Search</button>
+				<a class="btn btn-outline-dark" href="{% url 'maintenance_new' %}">Add New Maintenance</a>
+			</form>
+		</div>
+	</div>
+</div>
+<br>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th scope="col">Asset</th>
+			<th scope="col">Maintenance Type</th>
+			<th scope="col">Main Cost</th>
+			<th scope="col">Maintenance Start</th>
+			<th scope="col">Maintenance Expiry</th>
+			<th scope="col">Update</th>
+			<th scope="col">Delete</th>
+			<th scope="col">PDF</th>
+		</tr>
+	</thead>
+	<tbody>
+		{#{% for fa in main_all  %}#}
+		{% for fa in filter.qs %}
+		<tr>
+			<th scope="row"> <a href="{% url 'maintenance_detail' pk=fa.pk  %}">{{ fa.asset }}</a></th>
+			<td>{{ fa.ms_type  }}</td>
+			<td>{{ fa.main_cost  }}</td>
+			<td>{{ fa.main_date_start }}</td>
+			<td>{{ fa.main_date_end }}</td>
+			<td><a href="{% url 'maintenance_update' pk=fa.pk  %}" class="btn btn-outline-dark"><span class="fa fa-clone"></a></td>
+			<td><a href="{% url 'maintenance_delete' pk=fa.pk  %}"class="btn btn-outline-dark"><span class="fa fa-eraser"></a></td>
+			<td><a href="{#% url 'pdf_maintenance_view' pk=fa.pk  %}"class="btn btn-outline-dark"><span class="fa fa-pencil"></a></td>
+		</tr>
+		{% endfor %}
+		
+	</tbody>
+	<tfoot>
+		<tr>
+			<td scope="col"></td>
+			<td scope="col"></td>
+			<td scope="col"></td>
+			<td scope="col"></td>
+			<td scope="col"></td>
+			<td scope="col"></td>
+			<td scope="col"></td>
+		</tr>
+	</tfoot>
+</table >
+{% endblock %}
+
+

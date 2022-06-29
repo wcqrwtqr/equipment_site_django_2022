@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'equipmentList',
+    'equipmentMaintenance',
 ]
 
 MIDDLEWARE = [
@@ -78,8 +79,15 @@ WSGI_APPLICATION = 'equipmentApp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mohammedalbatati',
+        'USER':os.environ.get('SECRET_USER'),
+        'PASSWORD': os.environ.get('SECRET_DB'),
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

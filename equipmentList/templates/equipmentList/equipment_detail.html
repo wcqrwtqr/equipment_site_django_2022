@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+<!-- {#% load humanize %} -->
+
+{% block body_block %}
+
+<div class="card ">
+  <div class="card-header">
+    Fixed Asset Register Detail view
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <p class='card-text'>Asset No : {{ equipment_detail.asset_num}}</p>
+        <p class='card-text'>Serial No :  {{ equipment_detail.serial_num}}</p>
+        <p class='card-text'>Description :{{ equipment_detail.description}}</p>
+        <p class='card-text'>BU  : {{ equipment_detail.BU}}</p>
+        <p class='card-text'>BL  :  {{ equipment_detail.BL}}</p>
+      </div>
+      <div class="col">
+        <p class='card-text'>Asset Life  : {{ equipment_detail.asset_life}}</p>
+        <p class='card-text'>Acquisition Date  : {{ equipment_detail.acquisition_date}}</p>
+        <p class='card-text'>Acquisition Cost  :   {{ equipment_detail.acquisition_cost}}</p>
+        <p class='card-text'>Total Depreciation  :   {{ equipment_detail.tot_dep_value}}</p>
+        <p class='card-text'>NBV  :   {{ equipment_detail.nbv}}</p>
+        <p class='card-text'>Temp Location  : {{ equipment_detail.temp_location }}</p>
+      </div>
+    </div>
+    <br>
+    
+    <a class="btn btn-primary " href="{% url 'equipment' %}">Back to equipment</a>
+  </div>
+  <div class="card-footer text-muted">
+    {% if far_detail.nbv >= 100.00  %}
+    Equipment still chargeable
+    {% else  %}
+    Equipment fully depreciated
+    {% endif  %}
+  </div>
+</div>
+
+
+{% endblock %}
+
+
