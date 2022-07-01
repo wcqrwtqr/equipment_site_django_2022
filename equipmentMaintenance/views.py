@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+# from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView,ListView,DetailView,UpdateView,DeleteView,View, CreateView
 from .models import MaintenanceDB
 from django.urls import  reverse_lazy
@@ -6,14 +6,14 @@ from .forms import MaintenanceForm
 from .filters import Maintenancefilter
 # Create your views here.
 
-from django.http import HttpResponse
+# from django.http import HttpResponse
 # from django.template.loader import get_template
 # from xhtml2pdf import pisa
 
 class MaintenanceHomePage(ListView):
     template_name = 'equipmentMaintenance/maintenance_page.html'
     queryset = MaintenanceDB.objects.all()
-    context_object_name = 'main_all'
+    # context_object_name = 'main_all'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

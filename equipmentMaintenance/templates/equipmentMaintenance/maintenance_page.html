@@ -23,11 +23,12 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th scope="col">Asset</th>
+			<th scope="col">Asset No</th>
+			<th scope="col">Serial No</th>
 			<th scope="col">Maintenance Type</th>
-			<th scope="col">Main Cost</th>
 			<th scope="col">Maintenance Start</th>
 			<th scope="col">Maintenance Expiry</th>
+			<th scope="col">Main Cost</th>
 			<th scope="col">Update</th>
 			<th scope="col">Delete</th>
 			<th scope="col">PDF</th>
@@ -37,11 +38,12 @@
 		{#{% for fa in main_all  %}#}
 		{% for fa in filter.qs %}
 		<tr>
-			<th scope="row"> <a href="{% url 'maintenance_detail' pk=fa.pk  %}">{{ fa.asset }}</a></th>
+			<th scope="row"> <a href="{% url 'maintenance_detail' pk=fa.pk  %}">{{ fa.asset.asset_num }}</a></th>
+			<td>{{ fa.asset.serial_num }}</td>
 			<td>{{ fa.ms_type  }}</td>
-			<td>{{ fa.main_cost  }}</td>
 			<td>{{ fa.main_date_start }}</td>
 			<td>{{ fa.main_date_end }}</td>
+			<td>{{ fa.main_cost  }}</td>
 			<td><a href="{% url 'maintenance_update' pk=fa.pk  %}" class="btn btn-outline-dark"><span class="fa fa-clone"></a></td>
 			<td><a href="{% url 'maintenance_delete' pk=fa.pk  %}"class="btn btn-outline-dark"><span class="fa fa-eraser"></a></td>
 			<td><a href="{#% url 'pdf_maintenance_view' pk=fa.pk  %}"class="btn btn-outline-dark"><span class="fa fa-pencil"></a></td>

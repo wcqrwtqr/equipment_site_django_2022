@@ -13,7 +13,7 @@ class Maintenancefilter(django_filters.FilterSet):
         fields = ('asset','ms_type')
         # fields = {
         #     'ms_type' : ['icontains'],
-        #     'asset' : ['contains'],
+        #     'asset' : ['exac'],
         # }
 
     def filter_by_order(self,queryset, name, value):

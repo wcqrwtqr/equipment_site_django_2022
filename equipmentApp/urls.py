@@ -9,5 +9,6 @@ urlpatterns = [
     path('thanks/', views.ThanksPage.as_view(), name='thanks'),
     path('equipmentList/', include('equipmentList.urls')),
     path('equipmentMaintenance/', include('equipmentMaintenance.urls')),
+    path('jobs/', include('jobs.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
 ]
