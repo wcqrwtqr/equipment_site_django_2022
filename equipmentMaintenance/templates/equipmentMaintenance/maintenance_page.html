@@ -3,8 +3,7 @@
 {% block body_block %}
 
 <h1>Maintenance Page</h1>
-<p>Here will find the Maintenance list </p> 
-<!-- Adding the filter form here --> 
+<h3>Hello {{user.username}}</h3>
 <div class="row">
 	<div class="col">
 		<div class="card card-body" >
@@ -28,10 +27,13 @@
 			<th scope="col">Maintenance Type</th>
 			<th scope="col">Maintenance Start</th>
 			<th scope="col">Maintenance Expiry</th>
+			<th scope="col">Description</th>
 			<th scope="col">Main Cost</th>
 			<th scope="col">Update</th>
+			{% if user.is_superuser   %}
 			<th scope="col">Delete</th>
-			<th scope="col">PDF</th>
+			{% endif %}
+			<!-- <th scope="col">PDF</th> -->
 		</tr>
 	</thead>
 	<tbody>
@@ -43,10 +45,13 @@
 			<td>{{ fa.ms_type  }}</td>
 			<td>{{ fa.main_date_start }}</td>
 			<td>{{ fa.main_date_end }}</td>
+			<td>{{ fa.description }}</td>
 			<td>{{ fa.main_cost  }}</td>
 			<td><a href="{% url 'maintenance_update' pk=fa.pk  %}" class="btn btn-outline-dark"><span class="fa fa-clone"></a></td>
+			{% if user.is_superuser   %}
 			<td><a href="{% url 'maintenance_delete' pk=fa.pk  %}"class="btn btn-outline-dark"><span class="fa fa-eraser"></a></td>
-			<td><a href="{#% url 'pdf_maintenance_view' pk=fa.pk  %}"class="btn btn-outline-dark"><span class="fa fa-pencil"></a></td>
+			{% endif %}
+			<!-- <td><a href="{#% url 'pdf_maintenance_view' pk=fa.pk  %}"class="btn btn-outline-dark"><span class="fa fa-pencil"></a></td> -->
 		</tr>
 		{% endfor %}
 		

@@ -2,10 +2,9 @@
 {% load static %}
 {% block body_block %}
 
+
 <h1>Jobs Main Page</h1>
-
-<p>Here will find the Jobs list </p> 
-
+<h3>Hello {{user.username}}</h3>
 <div class="row">
 	<div class="col">
 		<div class="card card-body" >
@@ -38,7 +37,9 @@
 			<th scope="col">H2S</th>
 			<th scope="col">CO2</th>
 			<th scope="col">Update</th>
+			{% if user.is_superuser   %}
 			<th scope="col">Delete</th>
+			{% endif %}
 			<!-- <th scope="col">PDF</th> -->
 		</tr>
 	</thead>
@@ -56,12 +57,16 @@
 			<td>{{ fa.h2s}}</td>
 			<td>{{ fa.co2}}</td>
 			<td><a href="{% url 'jobs_update' pk=fa.pk  %}" class="btn btn-outline-dark"> <span class="fa fa-clone"></a></td>
+			{% if user.is_superuser   %}
 			<td><a href="{% url 'jobs_delete' pk=fa.pk  %}"class="btn btn-outline-dark"><span class="fa fa-eraser">  </a></td>
+			{% endif %}
 			<!-- <td><a href="{#% url 'pdf_job_view' pk=fa.pk  %}"class="btn btn-outline-dark"><span class="fa fa-pencil"></a></td> -->
 		</tr>
 		{% endfor %}
 	</tbody>
 </table >
+
+
 {% endblock %}
 
 {% block scripts  %}

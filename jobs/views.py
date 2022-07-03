@@ -1,15 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView,ListView,DetailView, View, CreateView, DeleteView, UpdateView
 from .models import JobsDB, JobMasterInfo
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 from django.urls import  reverse_lazy
 from .forms import *
 from .import models
 from .filters import Jobsfilter
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 # Below are the imports for the xhtml2pdf
-from django.http import HttpResponse
-from django.template.loader import get_template
+# from django.http import HttpResponse
+# from django.template.loader import get_template
 # from xhtml2pdf import pisa
 # from django.contrib.staticfiles import finders
 
@@ -35,12 +35,8 @@ class JobsMasterInfoView(ListView):
         context['filter'] = Jobsfilter(self.request.GET, queryset=self.queryset)
         return context
 
-# class JobsMasterInfoDetailView(DetailView):
-#     queryset = JobMasterInfo.objects.all()
-#     context_object_name = 'jobs_master_info_details'
-#     template_name = 'jobs/jobs_master_info_details.html'
-
-class JobsCreate(CreateView ):
+class JobsCreate(PermissionRequiredMixin, CreateView ):
+    permission_required = ("is_superuser")
     template_name = 'jobs/jobs_new.html'
     form_class = JobsForm
     model = models.JobsDB
@@ -56,18 +52,17 @@ class JobsDetailView(DetailView):
     context_object_name = 'jobs_detail'
     template_name = 'jobs/jobs_detail.html'
 
-
-class JobsUpdateView(UpdateView):
+class JobsUpdateView( UpdateView):
     template_name = 'jobs/jobs_update.html'
     model = models.JobsDB
     success_url = reverse_lazy('jobs')
     fields = "__all__"
 
-class JobsDeleteView(DeleteView):
+class JobsDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = ("is_superuser")
     template_name = 'jobs/jobs_confirm_delete.html'
     model = models.JobsDB
     success_url = reverse_lazy('jobs')
-
 
 class JobsEquipmentAdd(CreateView ):
     template_name = 'jobs/jobs_equipment_add.html'

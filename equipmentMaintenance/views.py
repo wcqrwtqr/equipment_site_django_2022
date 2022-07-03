@@ -4,6 +4,7 @@ from .models import MaintenanceDB
 from django.urls import  reverse_lazy
 from .forms import MaintenanceForm
 from .filters import Maintenancefilter
+from django.contrib.auth.mixins import PermissionRequiredMixin
 # Create your views here.
 
 # from django.http import HttpResponse
@@ -13,19 +14,16 @@ from .filters import Maintenancefilter
 class MaintenanceHomePage(ListView):
     template_name = 'equipmentMaintenance/maintenance_page.html'
     queryset = MaintenanceDB.objects.all()
-    # context_object_name = 'main_all'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = Maintenancefilter(self.request.GET, queryset=self.queryset)
         return context
 
-
 class MaintenanceDetailView(DetailView):
     queryset = MaintenanceDB.objects.all()
     template_name = 'equipmentMaintenance/maintenance_detail.html'
     context_object_name = 'maintenance_detail'
-
 
 class MaintenanceCreate(CreateView ):
     template_name = 'equipmentMaintenance/maintenance_new.html'
@@ -38,7 +36,8 @@ class MaintenanceCreate(CreateView ):
         self.object = save()
         return super().form_valid(form)
 
-class MaintenanceDeleteView(DeleteView):
+class MaintenanceDeleteView(PermissionRequiredMixin,DeleteView):
+    permission_required = ("is_superuser", )
     template_name = 'equipmentMaintenance/maintenance_confirm_delete.html'
     model = MaintenanceDB
     success_url = reverse_lazy('maintenance')

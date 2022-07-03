@@ -3,8 +3,8 @@
 {% load static %}
 {% block body_block %}
 
-<h1>Equipment List</h1>
-<p>Below is the list of the equipment available in location</p>
+<h1>Equipment Page List</h1>
+<h3>Hello {{user.username}}</h3>
 <!-- Adding the filter form here -->
 <div class="row">
 	<div class="col">
@@ -31,8 +31,9 @@
 			<th scope="col">BU</th>
 			<th scope="col">Location</th>
 			<th scope="col">Update</th>
+			{% if user.is_superuser   %}
 			<th scope="col">Delete</th>
-			<!-- <th scope="col">PDF</th> -->
+			{% endif %}
 		</tr>
 	</thead>
 	<tbody>
@@ -40,20 +41,19 @@
 		<tr>
 			<th scope="row"> <a href="{% url 'equipment_detail' pk=equip.pk %}">{{ equip.asset_num }}</a></th>
 			<td>{{ equip.serial_num }}</td>
-<td>{{ equip.description }}</td>
-<td>{{ equip.BU }}</td>
-<td>{{ equip.temp_location }}</td>
-<td><a href="{%url 'equipment_update' pk=equip.pk%}" class="btn btn-outline-dark"> <span class="fa fa-clone"></a></td>
-<td><a href="{%url 'equipment_delete' pk=equip.pk %}"class="btn btn-outline-dark"><span class="fa fa-eraser"></a></td>
-<!-- <td><a href="#"class="btn btn-outline-dark"><span class="fa fa-pencil"></a></td> -->
-</tr>
-{% endfor %}
-</tbody>
+			<td>{{ equip.description }}</td>
+			<td>{{ equip.BU }}</td>
+			<td>{{ equip.temp_location }}</td>
+			<td><a href="{%url 'equipment_update' pk=equip.pk%}" class="btn btn-outline-dark"> <span class="fa fa-clone"></a></td>
+			{% if user.is_superuser   %}
+			<td><a href="{%url 'equipment_delete' pk=equip.pk %}"class="btn btn-outline-dark"><span class="fa fa-eraser"></a></td>
+			{% endif %}
+		</tr>
+		{% endfor %}
+	</tbody>
 </table>
 
 <br>
-<br>
-
 {% endblock %}
 
 <!-- {% block scripts  %} -->

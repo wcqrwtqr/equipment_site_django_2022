@@ -6,7 +6,8 @@ from django.urls import  reverse_lazy
 from django.core.paginator import Paginator
 from .forms import EquipmentForm
 from . import models
-from django.db.models import Q
+from django.contrib.auth.mixins import PermissionRequiredMixin
+# from django.db.models import Q
 from equipmentMaintenance.models import MaintenanceDB
 from .filters import EquipmentFilter, EquipmentMaintenanceFilter
 from django import forms
@@ -15,33 +16,16 @@ from django import forms
 # from django.template.loader import get_template
 # from xhtml2pdf import pisa
 
-class MyPaginator(Paginator):
-    def validate_number(self, number):
-        try:
-            return super().validate_number(number)
-        except EmptyPage:
-            if int(number) > 1:
-                # return the last page
-                return self.num_pages
-            elif int(number) < 1:
-                # return the first page
-                return 1
-            else:
-                raise
-
 class EquipmentListView(ListView):
     template_name = 'equipmentList/equipment_page.html'
     queryset = models.EQUIPMENT_DB.objects.all()
-    # paginate_by = 50
-    # paginator_class = MyPaginator
-    # paginator = Paginator(queryset, per_page=50)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = EquipmentFilter(self.request.GET, queryset=self.queryset)
         return context
 
-    # Getting the equipment vs maintenance views and filtering them
+# Getting the equipment vs maintenance views and filtering them
 class EquipmentMaintenanceListView(ListView):
     template_name = 'equipmentList/equipment_maintenance_detail.html'
     queryset = MaintenanceDB.objects.all()
@@ -56,7 +40,8 @@ class EquipmentDetailView(DetailView):
     queryset = models.EQUIPMENT_DB.objects.all()
     context_object_name = 'equipment_detail'
 
-class EquipmentCreateView(CreateView):
+class EquipmentCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = ("is_superuser")
     template_name = 'equipmentList/equipment_new.html'
     form_class = EquipmentForm
     model = models.EQUIPMENT_DB
@@ -67,7 +52,8 @@ class EquipmentCreateView(CreateView):
         self.object = save()
         return super().form_valid(form)
 
-class EquipmentDeleteView(DeleteView):
+class EquipmentDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = ("is_superuser", )
     model = models.EQUIPMENT_DB
     success_url = reverse_lazy('equipment')
     template_name = 'equipmentList/equipment_confirm_delete.html'

@@ -10,12 +10,15 @@ class Maintenancefilter(django_filters.FilterSet):
 
     class Meta:
         model  = MaintenanceDB
-        fields = ('asset','ms_type')
-        # fields = {
-        #     'ms_type' : ['icontains'],
-        #     'asset' : ['exac'],
-        # }
+        fields = {
+            'ms_type' : ['icontains'],
+            'main_cost' : ['icontains'],
+            # 'asset.serial_num' : ['icontains'],
+            'description' : ['icontains'],
+        }
+        # fields = '__all__'
 
     def filter_by_order(self,queryset, name, value):
-        expression  = 'description' if value == 'ascending' else  '-description'
+        # expression  = 'description' if value == 'ascending' else  '-description'
+        expression  = 'asset' if value == 'ascending' else  '-asset'
         return queryset.order_by(expression)
