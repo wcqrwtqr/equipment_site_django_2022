@@ -30,6 +30,7 @@
 			<th scope="col">Description</th>
 			<th scope="col">BU</th>
 			<th scope="col">Location</th>
+			<th scope="col">Link</th>
 			<th scope="col">Update</th>
 			{% if user.is_superuser   %}
 			<th scope="col">Delete</th>
@@ -37,6 +38,7 @@
 		</tr>
 	</thead>
 	<tbody>
+		<p> No of items... <strong>{{filter.qs.count}}</strong></p>
 		{% for equip in filter.qs %}
 		<tr>
 			<th scope="row"> <a href="{% url 'equipment_detail' pk=equip.pk %}">{{ equip.asset_num }}</a></th>
@@ -44,6 +46,11 @@
 			<td>{{ equip.description }}</td>
 			<td>{{ equip.BU }}</td>
 			<td>{{ equip.temp_location }}</td>
+			{%if equip.file_link != null%}
+			<td><a href="{{ equip.file_link}}" target="_blank">Link</a></td>
+			{%else%}
+			<td></td>
+			{% endif %}
 			<td><a href="{%url 'equipment_update' pk=equip.pk%}" class="btn btn-outline-dark"> <span class="fa fa-clone"></a></td>
 			{% if user.is_superuser   %}
 			<td><a href="{%url 'equipment_delete' pk=equip.pk %}"class="btn btn-outline-dark"><span class="fa fa-eraser"></a></td>

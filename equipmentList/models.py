@@ -15,6 +15,7 @@ class EQUIPMENT_DB(models.Model):
     nbv  = models.DecimalField(max_digits=10, decimal_places=2,null=True,blank=True)
     acquisition_date  = models.DateField(null=True,blank=True)
     temp_location = models.CharField(max_length=200, blank=True,null=True)
+    file_link = models.URLField(max_length=200, null=True, blank=True)
 
 
     def get_absolute_url(self):

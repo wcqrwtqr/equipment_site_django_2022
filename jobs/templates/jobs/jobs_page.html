@@ -36,14 +36,17 @@
 			<th scope="col">End Date</th>
 			<th scope="col">H2S</th>
 			<th scope="col">CO2</th>
-			<th scope="col">Update</th>
+			<th scope="col">GenID</th>
+			<th scope="col">Link</th>
 			{% if user.is_superuser   %}
+			<th scope="col">Update</th>
 			<th scope="col">Delete</th>
 			{% endif %}
 			<!-- <th scope="col">PDF</th> -->
 		</tr>
 	</thead>
 	<tbody>
+		<p> No of items... <strong>{{filter.qs.count}}</strong></p>
 		{% for fa in filter.qs %}
 		<tr>
 			<th scope="row"> <a href="{% url 'jobs_detail' pk=fa.pk  %}">{{ fa.JOBID }}</a></th>
@@ -56,8 +59,14 @@
 			<td>{{ fa.endDate}}</td>
 			<td>{{ fa.h2s}}</td>
 			<td>{{ fa.co2}}</td>
-			<td><a href="{% url 'jobs_update' pk=fa.pk  %}" class="btn btn-outline-dark"> <span class="fa fa-clone"></a></td>
+			<td>{{ fa.gen_JOBID}}</td>
+			{%if fa.file_link != null%}
+			<td><a href="{{ fa.file_link}}" target="_blank">Link</a></td>
+			{%else%}
+			<td></td>
+			{% endif %}
 			{% if user.is_superuser   %}
+			<td><a href="{% url 'jobs_update' pk=fa.pk  %}" class="btn btn-outline-dark"> <span class="fa fa-clone"></a></td>
 			<td><a href="{% url 'jobs_delete' pk=fa.pk  %}"class="btn btn-outline-dark"><span class="fa fa-eraser">  </a></td>
 			{% endif %}
 			<!-- <td><a href="{#% url 'pdf_job_view' pk=fa.pk  %}"class="btn btn-outline-dark"><span class="fa fa-pencil"></a></td> -->
