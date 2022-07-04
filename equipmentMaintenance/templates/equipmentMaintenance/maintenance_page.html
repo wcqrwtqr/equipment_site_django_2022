@@ -38,7 +38,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		{{filter.qs.count}}
+		<p>No of items...{{filter.qs.count}}</p>
 		{% for fa in filter.qs %}
 		<tr>
 			<th scope="row"> <a href="{% url 'maintenance_detail' pk=fa.pk  %}">{{ fa.asset.asset_num }}</a></th>

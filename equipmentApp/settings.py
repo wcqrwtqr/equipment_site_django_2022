@@ -24,14 +24,18 @@ TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+# DEBUG = True
+DEBUG = False # Added for heroku deployment
+
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','.herokuapp.com'] # Added for heroku deployment
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',  # Added for heroku deployment
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware' # Added for heroku deployment
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -121,6 +126,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+WHITENOISE_USE_FINDERS = True # Added for heroku deployment
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' # Added for heroku deployment
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
